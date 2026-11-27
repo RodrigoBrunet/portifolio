@@ -8,7 +8,7 @@
     <title>Portfólio</title>
     <meta
       name="description"
-      content="Portfólio de projetos: aplicativos, sites e sistemas."
+      content="Desenvolvimento de apps Android e iOS em Flutter e sistemas web sob medida, da ideia à publicação."
     />
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,10 +24,14 @@
       <div class="container topo-conteudo">
         <a class="marca" href="#inicio" data-nome>Portfólio</a>
         <nav class="menu" aria-label="Principal">
-          <a class="menu-opcional" href="#sobre"><span data-num></span>sobre</a>
-          <a href="#trajetoria"><span data-num></span>trajetória</a>
+          <a href="#servicos"><span data-num></span>serviços</a>
+          <a href="#cases"><span data-num></span>cases</a>
+          <a class="menu-opcional" href="#processo"
+            ><span data-num></span>processo</a
+          >
           <a href="#projetos"><span data-num></span>projetos</a>
           <a href="#apps"><span data-num></span>apps</a>
+          <a class="menu-opcional" href="#sobre"><span data-num></span>sobre</a>
           <a href="#contato"><span data-num></span>contato</a>
         </nav>
       </div>
@@ -37,21 +41,30 @@
       <section id="inicio" class="hero">
         <div class="container hero-conteudo">
           <div class="revelar">
-            <p class="status">disponível para novos projetos</p>
+            <p class="status"></p>
             <div class="hero-identidade">
               <div id="hero-avatar" class="avatar"></div>
-              <p class="prompt"><b>~/</b>portfolio <b>$</b> whoami</p>
+              <div>
+                <p id="hero-nome" class="hero-nome"></p>
+                <p class="prompt"><b>~/</b>portfolio <b>$</b> whoami</p>
+              </div>
             </div>
-            <h1 id="hero-nome" class="texto-gradiente"></h1>
+            <h1 id="hero-titulo" class="hero-titulo"></h1>
             <p class="cargo">
               <span id="hero-cargo"></span
               ><span class="cursor" aria-hidden="true"></span>
             </p>
             <p id="hero-bio" class="hero-bio"></p>
-            <ul id="hero-stack" class="hero-stack" aria-label="Principais tecnologias"></ul>
+            <ul
+              id="hero-stack"
+              class="hero-stack"
+              aria-label="Principais tecnologias"
+            ></ul>
             <div class="hero-acoes">
-              <a class="botao" href="#trajetoria">Ver trajetória</a>
-              <a class="botao botao-sec" href="#contato">Entrar em contato</a>
+              <a class="botao" data-orcamento href="#contato"
+                >Quero um orçamento</a
+              >
+              <a class="botao botao-sec" href="#cases">Ver cases</a>
             </div>
             <div id="hero-redes" class="redes"></div>
           </div>
@@ -63,35 +76,59 @@
             <pre id="terminal-codigo"></pre>
           </div>
         </div>
-
-        <div id="numeros" class="container numeros revelar"></div>
       </section>
 
-      <section id="sobre" class="secao" data-numerada>
-        <div class="container sobre">
-          <div class="revelar">
-            <p class="rotulo"><span data-num></span>sobre</p>
-            <h2>Sobre mim</h2>
-            <div id="sobre-texto" class="sobre-texto"></div>
+      <section id="servicos" class="secao" data-numerada>
+        <div class="container">
+          <div class="secao-cabecalho revelar">
+            <div>
+              <p class="rotulo"><span data-num></span>serviços</p>
+              <h2>O que posso fazer por você</h2>
+              <p class="secao-intro">
+                Apps para Android e iOS, sistemas web, da primeira conversa ao
+                produto no ar.
+              </p>
+            </div>
           </div>
-          <div class="revelar">
-            <h3>stack</h3>
-            <ul id="habilidades" class="tags tags-grandes"></ul>
+          <div id="lista-servicos" class="servicos"></div>
+        </div>
+      </section>
+
+      <section id="cases" class="secao" data-numerada>
+        <div class="container">
+          <div class="secao-cabecalho revelar">
+            <div>
+              <p class="rotulo"><span data-num></span>na prática</p>
+              <h2>Estudos de caso</h2>
+              <p class="secao-intro">
+                Projetos reais: o desafio, o que eu fiz.
+              </p>
+            </div>
+          </div>
+          <div id="lista-casos" class="casos"></div>
+          <div class="chamada revelar">
+            <p>
+              <strong>Tem um projeto parecido?</strong> Me conte a ideia e eu
+              sugiro o melhor caminho.
+            </p>
+            <a class="botao" data-orcamento href="#contato">Vamos conversar</a>
           </div>
         </div>
       </section>
 
-      <section id="trajetoria" class="secao" data-numerada>
+      <section id="processo" class="secao" data-numerada>
         <div class="container">
           <div class="secao-cabecalho revelar">
             <div>
-              <p class="rotulo"><span data-num></span>carreira</p>
-              <h2>Trajetória</h2>
+              <p class="rotulo"><span data-num></span>processo</p>
+              <h2>Como eu trabalho</h2>
+              <p class="secao-intro">
+                Você acompanha cada etapa e fala direto com quem escreve o
+                código.
+              </p>
             </div>
           </div>
-          <ol id="lista-trajetoria" class="trajetoria"></ol>
-          <button id="btn-trajetoria" class="botao botao-sec btn-trajetoria" type="button"
-            aria-expanded="false" aria-controls="lista-trajetoria" hidden></button>
+          <ol id="lista-processo" class="processo"></ol>
         </div>
       </section>
 
@@ -125,22 +162,49 @@
         </div>
       </section>
 
+      <section id="sobre" class="secao" data-numerada>
+        <div class="container sobre">
+          <div class="revelar">
+            <p class="rotulo"><span data-num></span>sobre</p>
+            <h2>Sobre mim</h2>
+            <div id="sobre-texto" class="sobre-texto"></div>
+          </div>
+          <div class="revelar">
+            <h3>stack</h3>
+            <ul id="habilidades" class="tags tags-grandes"></ul>
+          </div>
+        </div>
+      </section>
+
       <section id="contato" class="secao" data-numerada>
         <div class="container">
           <div class="contato revelar">
             <p class="rotulo"><span data-num></span>contato</p>
             <h2>
-              Vamos construir algo <span class="texto-gradiente">juntos?</span>
+              Vamos tirar sua ideia
+              <span class="texto-gradiente">do papel?</span>
             </h2>
             <p>
-              Tem um projeto em mente ou quer saber mais sobre algum trabalho?
-              Fale comigo.
+              Conte o que você precisa, seja um app ou um sistema web, e eu
+              respondo com os próximos passos.
             </p>
             <div id="contato-links" class="contato-links"></div>
           </div>
         </div>
       </section>
     </main>
+
+    <dialog id="modal-caso" class="modal" aria-labelledby="modal-caso-titulo">
+      <div id="modal-caso-conteudo" class="modal-conteudo cartao"></div>
+    </dialog>
+
+    <a
+      id="whatsapp-flutuante"
+      class="whatsapp-flutuante"
+      target="_blank"
+      rel="noopener"
+      hidden
+    ></a>
 
     <footer class="rodape">
       <div class="container rodape-conteudo">

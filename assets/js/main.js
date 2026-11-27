@@ -2,8 +2,7 @@ const LISTA_EXP = typeof EXPERIENCIAS !== "undefined" ? EXPERIENCIAS : [];
 const semModelos = (lista) => (lista || []).filter((item) => !item.modelo);
 const LISTA_PART = semModelos(typeof PARTICIPACOES !== "undefined" ? PARTICIPACOES : []);
 const LISTA_APPS = semModelos(typeof MEUS_APPS !== "undefined" ? MEUS_APPS : []);
-
-const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const LISTA_CASOS = semModelos(typeof CASOS !== "undefined" ? CASOS : []);
 
 const STATUS_APP = {
   publicado: { rotulo: "Publicado", classe: "st-publicado" },
@@ -21,16 +20,12 @@ function mesesEntre(ini, fim) {
   const f = fim || { a: hoje.getFullYear(), m: hoje.getMonth() + 1 };
   return Math.max(1, (f.a - ini.a) * 12 + (f.m - ini.m) + 1);
 }
-function formatarMes(d) {
-  return d ? `${MESES[d.m - 1]} ${d.a}` : "atual";
-}
-function formatarDuracao(meses) {
-  const a = Math.floor(meses / 12);
-  const m = meses % 12;
-  const partes = [];
-  if (a) partes.push(`${a} ${a === 1 ? "ano" : "anos"}`);
-  if (m) partes.push(`${m} ${m === 1 ? "mês" : "meses"}`);
-  return partes.join(" e ");
+function periodoAnos(e) {
+  const ini = lerMes(e.inicio);
+  if (!ini) return "";
+  const fim = lerMes(e.fim);
+  if (fim && fim.a === ini.a) return String(ini.a);
+  return `${ini.a} — ${fim ? fim.a : "atual"}`;
 }
 function anosExperiencia() {
   const inicios = LISTA_EXP.map((e) => lerMes(e.inicio)).filter(Boolean);
@@ -47,6 +42,7 @@ function renderPerfil() {
   const anos = anosExperiencia();
   document.title = `${PERFIL.nome} — Portfólio`;
   document.getElementById("hero-nome").textContent = PERFIL.nome;
+  renderTitulo();
   digitar(document.getElementById("hero-cargo"), PERFIL.cargos?.length ? PERFIL.cargos : [PERFIL.cargo]);
   document.getElementById("hero-bio").textContent = (PERFIL.bio || "").replace(/\{anos\}/g, anos);
 
@@ -78,44 +74,93 @@ function renderPerfil() {
     )
     .join("");
 
-  renderNumeros(anos);
   document.getElementById("terminal-codigo").innerHTML = codigoTerminal();
 }
 
-function plural(n, singular, pluralTxt) {
-  return n === 1 ? singular : pluralTxt;
+function renderTitulo() {
+  const el = document.getElementById("hero-titulo");
+  const titulo = PERFIL.titulo || PERFIL.nome;
+  const destaque = PERFIL.tituloDestaque;
+  const pos = destaque ? titulo.indexOf(destaque) : -1;
+  el.innerHTML =
+    pos < 0
+      ? esc(titulo)
+      : esc(titulo.slice(0, pos)) +
+        `<span class="texto-gradiente">${esc(destaque)}</span>` +
+        esc(titulo.slice(pos + destaque.length));
 }
 
-function renderNumeros(anos) {
-  const maiorTime = Math.max(
-    0,
-    ...LISTA_EXP.flatMap((e) => e.destaques || [])
-      .filter((d) => /pessoas/i.test(d.rotulo))
-      .map((d) => parseInt(d.valor, 10) || 0)
-  );
-  const publicados = LISTA_APPS.filter((a) => a.status === "publicado").length;
-  const numeros = [
-    [anos, plural(anos, "ano de experiência", "anos de experiência")],
-    [LISTA_EXP.length, plural(LISTA_EXP.length, "experiência profissional", "experiências profissionais")],
-    [maiorTime, "pessoas no maior time"],
-    publicados
-      ? [publicados, plural(publicados, "app publicado", "apps publicados")]
-      : [LISTA_APPS.length, plural(LISTA_APPS.length, "app próprio", "apps próprios")],
-  ].filter(([n]) => n > 0);
+function linkWhatsapp() {
+  if (!PERFIL.whatsapp) return "";
+  const mensagem = "Olá! Vi seu portfólio e gostaria de conversar sobre um projeto.";
+  return `https://wa.me/${encodeURIComponent(PERFIL.whatsapp)}?text=${encodeURIComponent(mensagem)}`;
+}
 
-  const el = document.getElementById("numeros");
-  if (!numeros.length) {
-    el.hidden = true;
+function aplicarLinkOrcamento(raiz) {
+  const whatsapp = linkWhatsapp();
+  if (!whatsapp) return;
+  raiz.querySelectorAll("[data-orcamento]").forEach((a) => {
+    a.href = whatsapp;
+    a.target = "_blank";
+    a.rel = "noopener";
+  });
+}
+
+function iniciarContatoRapido() {
+  const whatsapp = linkWhatsapp();
+  if (!whatsapp) return;
+  aplicarLinkOrcamento(document);
+  const flutuante = document.getElementById("whatsapp-flutuante");
+  flutuante.href = whatsapp;
+  flutuante.innerHTML = ICONES.whatsapp;
+  flutuante.setAttribute("aria-label", "Conversar no WhatsApp");
+  flutuante.title = "Conversar no WhatsApp";
+  flutuante.hidden = false;
+}
+
+function renderServicos() {
+  if (typeof SERVICOS === "undefined" || !SERVICOS.length) {
+    document.getElementById("servicos").hidden = true;
     return;
   }
-  el.innerHTML = numeros
-    .map(([n, rotulo]) => `<div class="numero"><strong>${esc(n)}</strong><span>${esc(rotulo)}</span></div>`)
-    .join("");
+  document.getElementById("lista-servicos").innerHTML = SERVICOS.map(
+    (servico) => `
+      <article class="servico cartao revelar">
+        <span class="servico-icone">${ICONES_SERVICO[servico.icone] || ICONES_SERVICO.celular}</span>
+        <h3>${esc(servico.titulo)}</h3>
+        <p>${esc(servico.texto)}</p>
+      </article>`
+  ).join("");
+}
+
+function renderProcesso() {
+  if (typeof PROCESSO === "undefined" || !PROCESSO.length) {
+    document.getElementById("processo").hidden = true;
+    return;
+  }
+  document.getElementById("lista-processo").innerHTML = PROCESSO.map(
+    (etapa, i) => `
+      <li class="etapa cartao revelar">
+        <span class="etapa-num">${String(i + 1).padStart(2, "0")}</span>
+        <h3>${esc(etapa.titulo)}</h3>
+        <p>${esc(etapa.texto)}</p>
+      </li>`
+  ).join("");
+}
+
+function iniciarBrilhoCartoes() {
+  if (!matchMedia("(hover: hover)").matches) return;
+  document.addEventListener("pointermove", (e) => {
+    const cartao = e.target.closest?.(".cartao");
+    if (!cartao) return;
+    const r = cartao.getBoundingClientRect();
+    cartao.style.setProperty("--x", `${e.clientX - r.left}px`);
+    cartao.style.setProperty("--y", `${e.clientY - r.top}px`);
+  });
 }
 
 function numerarSecoes() {
   const visiveis = [...document.querySelectorAll("section[data-numerada]")].filter((s) => !s.hidden);
-  let links = 0;
   document.querySelectorAll("section[data-numerada]").forEach((secao) => {
     const i = visiveis.indexOf(secao);
     const num = i >= 0 ? String(i + 1).padStart(2, "0") + "." : "";
@@ -125,10 +170,8 @@ function numerarSecoes() {
     if (link) {
       link.hidden = i < 0;
       link.querySelector("[data-num]").textContent = num;
-      if (i >= 0) links++;
     }
   });
-  document.querySelector(".menu")?.classList.toggle("menu-cheio", links > 4);
 }
 
 function digitar(el, textos) {
@@ -176,82 +219,81 @@ function codigoTerminal() {
   return linhas.map((l, i) => `<span class="ln">${i + 1}</span>${l}`).join("\n");
 }
 
-const TRAJETORIA_VISIVEIS = 2;
-
-function renderTrajetoria() {
-  const el = document.getElementById("lista-trajetoria");
-  if (!LISTA_EXP.length) {
-    document.getElementById("trajetoria").hidden = true;
+function renderCasos() {
+  if (!LISTA_CASOS.length) {
+    document.getElementById("cases").hidden = true;
     return;
   }
-  el.innerHTML = LISTA_EXP.map((e, i) => {
-    const ini = lerMes(e.inicio);
-    const fim = lerMes(e.fim);
-    const atual = ini && !e.fim;
-    const lista = e.experiencias || e.atividades || [];
-    const periodo = ini
-      ? `<p class="exp-periodo">
-          ${atual ? '<span class="selo-atual">atual</span>' : ""}
-          ${formatarMes(ini)} — ${formatarMes(fim)}
-          <span class="exp-duracao">${formatarDuracao(mesesEntre(ini, fim))}</span>
-        </p>`
-      : "";
+  document.getElementById("lista-casos").innerHTML = LISTA_CASOS.map((caso, i) => {
+    const periodo = periodoAnos(caso);
     return `
-      <li class="exp revelar ${atual ? "exp-atual" : ""} ${i >= TRAJETORIA_VISIVEIS ? "exp-extra" : ""}"
-        ${i >= TRAJETORIA_VISIVEIS ? "hidden" : ""}>
-        <div class="exp-cabecalho">
-          <div>
-            <h3>${esc(e.cargo)}</h3>
-            ${e.contexto ? `<p class="exp-contexto">${esc(e.contexto)}</p>` : ""}
-          </div>
-          ${periodo}
-        </div>
-        ${e.resumo ? `<p class="exp-resumo">${esc(e.resumo)}</p>` : ""}
+      <article class="caso cartao revelar${i === 0 && LISTA_CASOS.length % 2 === 1 ? " caso-destaque" : ""}">
+        <p class="caso-topo">
+          <span class="caso-num">caso ${String(i + 1).padStart(2, "0")}</span>
+          ${periodo ? `<span class="caso-periodo">${esc(periodo)}</span>` : ""}
+        </p>
+        <h3>${esc(caso.titulo)}</h3>
+        ${caso.contexto ? `<p class="caso-contexto">${esc(caso.contexto)}</p>` : ""}
+        ${caso.desafio ? `<p class="caso-desafio">${esc(caso.desafio)}</p>` : ""}
+        ${caso.resultado ? `<p class="caso-resultado"><span>resultado</span>${esc(caso.resultado)}</p>` : ""}
         ${
-          e.destaques?.length
-            ? `<div class="exp-destaques">${e.destaques
-                .map((d) => `<div><strong>${esc(d.valor)}</strong><span>${esc(d.rotulo)}</span></div>`)
-                .join("")}</div>`
+          caso.solucao?.length
+            ? `<button type="button" class="caso-abrir" data-caso="${i}" aria-haspopup="dialog">ver o que eu fiz</button>`
             : ""
         }
-        ${tags(e.tecnologias, 4)}
-        ${
-          lista.length
-            ? `<details class="exp-detalhes">
-                <summary>ver detalhes</summary>
-                <div class="exp-bloco"><span>experiências construídas</span>
-                  <ul class="exp-atividades">${lista.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
-                </div>
-                ${e.tecnologias?.length > 4 ? `<div class="exp-bloco"><span>stack completa</span>${tags(e.tecnologias)}</div>` : ""}
-              </details>`
-            : ""
-        }
-      </li>`;
+      </article>`;
   }).join("");
-  iniciarBotaoTrajetoria(el);
 }
 
-function iniciarBotaoTrajetoria(lista) {
-  const btn = document.getElementById("btn-trajetoria");
-  const extras = lista.querySelectorAll(".exp-extra");
-  if (!extras.length) return;
+function abrirCaso(i) {
+  const caso = LISTA_CASOS[i];
+  const modal = document.getElementById("modal-caso");
+  if (!caso || !modal) return;
+  document.getElementById("modal-caso-conteudo").innerHTML = `
+    <button type="button" class="modal-fechar" data-fechar aria-label="Fechar">${ICONES.fechar}</button>
+    <p class="caso-topo"><span class="caso-num">caso ${String(i + 1).padStart(2, "0")} · o que eu fiz</span></p>
+    <h3 id="modal-caso-titulo">${esc(caso.titulo)}</h3>
+    <ul class="caso-lista modal-lista">${(caso.solucao || []).map((item, n) => `<li style="--i:${n}">${esc(item)}</li>`).join("")}</ul>
+    ${caso.resultado ? `<p class="caso-resultado"><span>resultado</span>${esc(caso.resultado)}</p>` : ""}
+    <div class="modal-acoes">
+      <a class="botao" data-orcamento href="#contato">Quero algo parecido</a>
+    </div>`;
+  aplicarLinkOrcamento(modal);
+  modal.classList.remove("fechando");
+  modal.showModal();
+  modal.querySelector("[data-fechar]").focus();
+}
 
-  const rotulo = (aberto) =>
-    aberto ? "recolher trajetória" : `ver trajetória completa (+${extras.length})`;
-  btn.textContent = rotulo(false);
-  btn.hidden = false;
+function fecharModal(modal) {
+  if (!modal.open || modal.classList.contains("fechando")) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    modal.close();
+    return;
+  }
+  modal.classList.add("fechando");
+  const terminar = () => {
+    modal.classList.remove("fechando");
+    modal.close();
+  };
+  modal.querySelector(".modal-conteudo").addEventListener("animationend", terminar, { once: true });
+  setTimeout(() => modal.open && terminar(), 300);
+}
 
-  btn.addEventListener("click", () => {
-    const abrir = btn.getAttribute("aria-expanded") !== "true";
-    extras.forEach((li) => (li.hidden = !abrir));
-    btn.setAttribute("aria-expanded", String(abrir));
-    btn.textContent = rotulo(abrir);
-    if (abrir) {
-      extras[0].querySelector("h3")?.setAttribute("tabindex", "-1");
-      extras[0].querySelector("h3")?.focus({ preventScroll: true });
-    } else {
-      btn.scrollIntoView({ block: "nearest" });
-    }
+function iniciarModalCasos() {
+  const modal = document.getElementById("modal-caso");
+  const lista = document.getElementById("lista-casos");
+  if (!modal || !lista) return;
+  lista.addEventListener("click", (e) => {
+    const botao = e.target.closest(".caso-abrir");
+    if (botao) abrirCaso(Number(botao.dataset.caso));
+  });
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal || e.target.closest("[data-fechar]")) fecharModal(modal);
+    else if (e.target.closest('a[href^="#"]')) modal.close();
+  });
+  modal.addEventListener("cancel", (e) => {
+    e.preventDefault();
+    fecharModal(modal);
   });
 }
 
@@ -290,7 +332,7 @@ function tags(lista, max = Infinity) {
 
 function cardParticipacao(p) {
   return `
-    <article class="card revelar">
+    <article class="card cartao revelar">
       ${capa(p)}
       <div class="card-corpo">
         <div class="card-meta">
@@ -315,7 +357,7 @@ function cardApp(a) {
     ? `<a class="chip-link chip-sutil" href="privacidade.html?app=${encodeURIComponent(a.id)}">${ICONES.escudo}Privacidade</a>`
     : "";
   return `
-    <article class="card revelar">
+    <article class="card cartao revelar">
       ${capa(a)}
       <div class="card-corpo">
         <div class="card-meta">
@@ -343,7 +385,8 @@ function renderParticipacoes() {
   const desenhar = (cat) => {
     const filtrados = cat === "Todos" ? lista : lista.filter((p) => p.categoria === cat);
     grade.innerHTML = filtrados.map(cardParticipacao).join("");
-    iniciarRevelar();
+    iniciarBrilhoCartoes();
+iniciarRevelar();
   };
 
   if (categorias.length > 1) {
@@ -372,8 +415,8 @@ function renderMeusApps() {
 
 function renderContato() {
   const itens = [];
+  if (PERFIL.whatsapp) itens.push(["whatsapp", "WhatsApp", linkWhatsapp()]);
   if (PERFIL.email) itens.push(["email", PERFIL.email, `mailto:${PERFIL.email}`]);
-  if (PERFIL.whatsapp) itens.push(["whatsapp", "WhatsApp", `https://wa.me/${PERFIL.whatsapp}`]);
   (PERFIL.redes || []).forEach((r) => itens.push([r.tipo, NOMES_REDES[r.tipo] || r.tipo, r.url]));
 
   document.getElementById("contato-links").innerHTML = itens
@@ -416,11 +459,16 @@ function iniciarRevelar() {
 }
 
 renderPerfil();
-renderTrajetoria();
+renderServicos();
+renderCasos();
+renderProcesso();
 renderParticipacoes();
 renderMeusApps();
 renderContato();
+iniciarContatoRapido();
+iniciarModalCasos();
 renderListaPrivacidade();
 numerarSecoes();
 preencherRodape();
+iniciarTema();
 iniciarRevelar();

@@ -117,6 +117,7 @@ function indice(apps) {
 
 (function () {
   preencherRodape();
+  iniciarTema();
 
   const id = new URLSearchParams(location.search).get("app");
   const apps = MEUS_APPS.filter((p) => p.privacidade);

@@ -33,6 +33,8 @@ const ICONES = {
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm-1 1 9 7 9-7"/></svg>',
   whatsapp:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48a9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.07-.13-.27-.2-.57-.35ZM12.04 21.8h-.01a9.8 9.8 0 0 1-5-1.37l-.36-.21-3.72.97 1-3.62-.24-.37a9.8 9.8 0 1 1 8.33 4.6Zm8.34-18.13A11.73 11.73 0 0 0 12.04.2 11.8 11.8 0 0 0 1.82 17.9L.15 24l6.25-1.64a11.8 11.8 0 0 0 5.64 1.43h.01A11.8 11.8 0 0 0 23.85 12a11.7 11.7 0 0 0-3.47-8.33Z"/></svg>',
+  fechar:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>',
   escudo:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6l-8-3Z"/></svg>',
 };
@@ -50,6 +52,51 @@ const ICONES_TEC = {
   angular:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M12 1.5 2.3 5l1.5 12.6L12 22.5l8.2-4.9L21.7 5 12 1.5Zm0 2.6L6 17.6h2.2l1.2-3h5.2l1.2 3H18L12 4.1Zm1.8 8.7h-3.6L12 8.4l1.8 4.4Z"/></svg>',
 };
+
+const ICONES_SERVICO = {
+  celular: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></g></svg>',
+  monitor: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></g></svg>',
+  publicar: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3m-4 4 4-4 4 4M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>',
+  api: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m8 8-4 4 4 4m8-8 4 4-4 4M14 4l-4 16"/></svg>',
+  camadas: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3 2 8l10 5 10-5-10-5ZM2 16l10 5 10-5M2 12l10 5 10-5"/></svg>',
+  ferramenta: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4 2.5-2.5Z"/></svg>',
+};
+
+const ICONES_TEMA = {
+  sol: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>',
+  lua: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>',
+};
+
+const COR_TOPO = { escuro: "#05070f", claro: "#e9eef5" };
+
+function iniciarTema() {
+  const topo = document.querySelector(".topo-conteudo");
+  const menu = topo?.querySelector(".menu");
+  if (!topo || !menu) return;
+
+  const acoes = document.createElement("div");
+  acoes.className = "topo-acoes";
+  menu.replaceWith(acoes);
+  acoes.append(menu);
+
+  const botao = document.createElement("button");
+  botao.type = "button";
+  botao.className = "botao-tema";
+  acoes.append(botao);
+
+  const metaCor = document.querySelector('meta[name="theme-color"]');
+  const aplicar = (claro) => {
+    if (claro) document.documentElement.dataset.theme = "light";
+    else delete document.documentElement.dataset.theme;
+    botao.innerHTML = claro ? ICONES_TEMA.lua : ICONES_TEMA.sol;
+    botao.setAttribute("aria-label", claro ? "Ativar modo escuro" : "Ativar modo claro");
+    botao.title = botao.getAttribute("aria-label");
+    if (metaCor) metaCor.content = claro ? COR_TOPO.claro : COR_TOPO.escuro;
+  };
+
+  aplicar(false);
+  botao.addEventListener("click", () => aplicar(document.documentElement.dataset.theme !== "light"));
+}
 
 const NOMES_REDES = {
   github: "GitHub",
