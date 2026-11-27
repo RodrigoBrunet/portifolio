@@ -1,5 +1,3 @@
-/* Funções compartilhadas entre as páginas. */
-
 function esc(texto) {
   return String(texto ?? "")
     .replace(/&/g, "&amp;")
@@ -39,7 +37,6 @@ const ICONES = {
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6l-8-3Z"/></svg>',
 };
 
-/* Ícones das tecnologias (linha de stack no topo). A chave é o nome em minúsculas. */
 const ICONES_TEC = {
   flutter:
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.31 0 2.3 12 6 15.7 21.68 0h-7.37Zm.02 11.07-6.47 6.46 6.47 6.47h7.37l-6.46-6.47 6.46-6.46h-7.37Z"/></svg>',

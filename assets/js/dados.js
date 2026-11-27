@@ -1,31 +1,14 @@
-/* ==========================================================================
-   DADOS DO PORTFÓLIO
-   --------------------------------------------------------------------------
-   Este é o ÚNICO arquivo que você precisa editar para atualizar o site.
-   - PERFIL:        suas informações pessoais.
-   - EXPERIENCIAS:  sua trajetória (empresas/clientes onde atuou).
-   - PARTICIPACOES: projetos de que você participou (em equipe, para clientes).
-   - MEUS_APPS:     seus apps autorais. Um app com o bloco "privacidade" ganha
-                    automaticamente a página  privacidade.html?app=<id>
-                    (use esse link no Google Play Console).
-   Para adicionar um item, copie um bloco { ... } da lista e altere.
-   ========================================================================== */
-
 const PERFIL = {
   nome: "Rodrigo Brunet",
   cargo: "Desenvolvedor Mobile & Web",
-  // Textos que se alternam no efeito de digitação do topo (opcional).
   cargos: [
     "Desenvolvedor Mobile & Web",
     "Especialista em Flutter",
     "Apps Android & iOS",
   ],
-  // Aparecem no terminal "dev.config.js" do topo.
   foco: "apps Flutter para Android e iOS",
-  abertoA: [], // ex.: ["CLT", "PJ", "freelance"] (vazio = linha escondida)
-  // Selo verde "disponível" no topo. Deixe "" para esconder.
+  abertoA: [],
   status: "disponível para novos projetos",
-  // {anos} é trocado automaticamente pelos anos de experiência (calculados pela trajetória).
   bio:
     "Há {anos} anos desenvolvo apps em Flutter para produtos financeiros e de varejo, " +
     "em times de grandes empresas. Agora também publico meus próprios apps.",
@@ -33,23 +16,18 @@ const PERFIL = {
     "Sou desenvolvedor mobile com foco em Flutter. Atuei em times de 15 a 25 pessoas em produtos de crédito, conta digital e varejo, do design no Figma até a publicação nas lojas.",
     "Gosto de código bem organizado, testado e fiel ao design. Além dos projetos em equipe, hoje desenvolvo e publico meus próprios aplicativos.",
   ],
-  foto: "", // ex.: "assets/img/perfil.jpg"  (vazio = mostra as iniciais)
+  foto: "",
   localizacao: "Brasil",
   email: "contato@seudominio.com",
-  whatsapp: "", // ex.: "5511999999999" (somente números, com DDI e DDD)
+  whatsapp: "",
   redes: [
     { tipo: "github", url: "https://github.com/RodrigoBrunet" },
     {
       tipo: "linkedin",
       url: "https://www.linkedin.com/in/rodrigo-brunet-b66bb5168/",
     },
-    // { tipo: "instagram", url: "https://instagram.com/seuusuario" },
-    // { tipo: "playstore", url: "https://play.google.com/store/apps/dev?id=SEU_ID" },
   ],
-  // Linha de ícones no topo (4 a 6 itens). Com ícone: Flutter, Dart, Android, iOS, Angular, Java.
-  // Outros nomes aparecem só como texto.
-  stack: [], // ex.: ["Flutter", "Android", "iOS", "Angular", "Java"]
-  // Seção "Sobre mim" (coluna "stack"). Nomes com ícone em ICONES_TEC ganham o ícone.
+  stack: [],
   habilidades: [
     "Flutter",
     "Dart",
@@ -65,13 +43,6 @@ const PERFIL = {
   ],
 };
 
-/* --------------------------------------------------------------------------
-   TRAJETÓRIA: da mais recente para a mais antiga.
-   Sem nomes de empresas: descreva o CONTEXTO (setor, tipo de produto, porte)
-   e as EXPERIÊNCIAS que você construiu ali.
-   Datas no formato "AAAA-MM". Deixe fim: "" se for a fase atual.
-   As datas são opcionais, mas são usadas para calcular os anos de experiência.
-   -------------------------------------------------------------------------- */
 const EXPERIENCIAS = [
   {
     cargo: "Desenvolvedor Mobile Sênior",
@@ -80,13 +51,11 @@ const EXPERIENCIAS = [
     fim: "",
     resumo:
       "Jornadas de Crédito do Trabalhador e Antecipação do FGTS em Flutter, dentro dos apps nativos do banco.",
-    // Números em destaque no cartão (2 ou 3 funcionam melhor).
     destaques: [
       { valor: "18", rotulo: "pessoas no time" },
       { valor: "2", rotulo: "produtos de crédito" },
       { valor: "Android + iOS", rotulo: "plataformas" },
     ],
-    // Aparecem ao clicar em "ver detalhes". Frases curtas!
     experiencias: [
       "Flutter embarcado nos apps nativos (add-to-app)",
       "Ponte com Android e iOS via Method Channel",
@@ -218,23 +187,18 @@ const EXPERIENCIAS = [
   },
 ];
 
-/* --------------------------------------------------------------------------
-   PROJETOS QUE PARTICIPEI: trabalhos em equipe, para empresas ou clientes.
-   selos (opcional): "Em equipe", "Freelance", "Confidencial"...
-   Sem nenhum projeto real, a seção some do site e do menu automaticamente.
-   -------------------------------------------------------------------------- */
 const PARTICIPACOES = [
   {
-    modelo: true, // exemplo: não aparece no site. Apague esta linha ao preencher com um projeto real.
+    modelo: true,
     titulo: "Página / Site do Projeto",
-    empresa: "", // opcional: nome ou descrição genérica (ex.: "Cliente do setor de saúde")
-    categoria: "Web", // ex.: Web, Mobile, Sistema...
+    empresa: "",
+    categoria: "Web",
     ano: 2025,
     resumo: "Contexto: o que é o projeto e para quem foi feito.",
     papel: "O que VOCÊ fez: telas, integrações, arquitetura, liderança...",
-    resultado: "", // opcional: impacto/resultado (ex.: "+30% de conversão")
+    resultado: "",
     selos: ["Em equipe"],
-    imagem: "", // ex.: "assets/img/projeto.png" (vazio = capa gerada automaticamente)
+    imagem: "",
     tecnologias: ["HTML", "CSS", "JavaScript"],
     links: {
       site: "https://exemplo.com",
@@ -245,11 +209,6 @@ const PARTICIPACOES = [
   },
 ];
 
-/* --------------------------------------------------------------------------
-   MEUS APPS: seus apps autorais.
-   status: "publicado" | "desenvolvimento" | "em-breve"
-   id: usado na URL da política (sem espaços/acentos)
-   -------------------------------------------------------------------------- */
 const MEUS_APPS = [
   {
     id: "meu-app-1",
@@ -258,7 +217,7 @@ const MEUS_APPS = [
     ano: 2026,
     resumo:
       "Breve descrição do aplicativo: qual problema resolve e para quem foi feito.",
-    imagem: "", // ex.: "assets/img/meu-app-1.png"
+    imagem: "",
     tecnologias: ["Flutter", "Firebase"],
     links: {
       playStore:
@@ -268,9 +227,7 @@ const MEUS_APPS = [
     },
     privacidade: {
       atualizadoEm: "2026-11-26",
-      // desenvolvedor: "",        // opcional; padrão = PERFIL.nome
-      // emailContato: "",         // opcional; padrão = PERFIL.email
-      coletaDados: true, // false = app não coleta nenhum dado pessoal
+      coletaDados: true,
       dadosColetados: [
         "Endereço de e-mail (para criação de conta)",
         "Dados de uso e diagnóstico (falhas e desempenho)",
@@ -288,14 +245,11 @@ const MEUS_APPS = [
           nome: "Firebase (Google)",
           url: "https://firebase.google.com/support/privacy",
         },
-        // { nome: "Google AdMob", url: "https://support.google.com/admob/answer/6128543" },
       ],
       permissoes: [
-        // "Câmera: usada apenas para ler QR Codes",
       ],
       retencao:
         "Os dados são mantidos enquanto a conta estiver ativa e excluídos em até 30 dias após o pedido de exclusão.",
-      // Seção "Exclusão de conta e dados" (link: privacidade.html?app=<id>#exclusao)
       exclusao:
         "Para solicitar a exclusão da sua conta e dos dados associados, envie um e-mail para o endereço de contato informando o e-mail cadastrado. Você também pode excluir a conta diretamente no app em Configurações > Conta > Excluir conta.",
     },

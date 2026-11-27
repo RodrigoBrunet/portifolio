@@ -1,5 +1,3 @@
-/* Gera a Política de Privacidade de um app: privacidade.html?app=<id> */
-
 function formatarData(iso) {
   if (!iso) return "";
   const [a, m, d] = iso.split("-").map(Number);

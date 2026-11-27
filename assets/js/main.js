@@ -1,7 +1,4 @@
-/* Monta a página inicial a partir de dados.js */
-
 const LISTA_EXP = typeof EXPERIENCIAS !== "undefined" ? EXPERIENCIAS : [];
-// Itens com "modelo: true" são exemplos de preenchimento e não aparecem no site.
 const semModelos = (lista) => (lista || []).filter((item) => !item.modelo);
 const LISTA_PART = semModelos(typeof PARTICIPACOES !== "undefined" ? PARTICIPACOES : []);
 const LISTA_APPS = semModelos(typeof MEUS_APPS !== "undefined" ? MEUS_APPS : []);
@@ -14,7 +11,6 @@ const STATUS_APP = {
   "em-breve": { rotulo: "Em breve", classe: "st-breve" },
 };
 
-/* ===== Datas ===== */
 function lerMes(aaaamm) {
   if (!aaaamm) return null;
   const [a, m] = aaaamm.split("-").map(Number);
@@ -43,8 +39,6 @@ function anosExperiencia() {
   return Math.floor(mesesEntre(primeiro, null) / 12);
 }
 
-/* ===== Perfil / topo ===== */
-/* Item de tecnologia: ícone (se houver em ICONES_TEC) + nome. */
 function itemTec(t) {
   return `<li>${ICONES_TEC[String(t).toLowerCase()] || ""}${esc(t)}</li>`;
 }
@@ -88,12 +82,10 @@ function renderPerfil() {
   document.getElementById("terminal-codigo").innerHTML = codigoTerminal();
 }
 
-/* "1 projeto" / "2 projetos" */
 function plural(n, singular, pluralTxt) {
   return n === 1 ? singular : pluralTxt;
 }
 
-/* Faixa de números abaixo do topo. Números zerados não aparecem. */
 function renderNumeros(anos) {
   const maiorTime = Math.max(
     0,
@@ -121,7 +113,6 @@ function renderNumeros(anos) {
     .join("");
 }
 
-/* Numera as seções visíveis (01, 02...) no rótulo e no menu, e esconde do menu as que sumiram. */
 function numerarSecoes() {
   const visiveis = [...document.querySelectorAll("section[data-numerada]")].filter((s) => !s.hidden);
   let links = 0;
@@ -140,7 +131,6 @@ function numerarSecoes() {
   document.querySelector(".menu")?.classList.toggle("menu-cheio", links > 4);
 }
 
-/* Efeito de digitação. Com mais de um texto, alterna entre eles. */
 function digitar(el, textos) {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || textos.length === 0) {
     el.textContent = textos[0] || "";
@@ -166,7 +156,6 @@ function digitar(el, textos) {
   setTimeout(passo, 500);
 }
 
-/* Bloco de código "dev.config.js" gerado a partir dos dados */
 function codigoTerminal() {
   const s = (v) => `<span class="tk-s">"${esc(v)}"</span>`;
   const n = (v) => `<span class="tk-b">${esc(v)}</span>`;
@@ -187,8 +176,6 @@ function codigoTerminal() {
   return linhas.map((l, i) => `<span class="ln">${i + 1}</span>${l}`).join("\n");
 }
 
-/* ===== Trajetória ===== */
-// Quantas fases (as mais recentes) aparecem antes do botão "ver trajetória completa".
 const TRAJETORIA_VISIVEIS = 2;
 
 function renderTrajetoria() {
@@ -244,7 +231,6 @@ function renderTrajetoria() {
   iniciarBotaoTrajetoria(el);
 }
 
-/* Mostra/esconde as fases mais antigas da trajetória. */
 function iniciarBotaoTrajetoria(lista) {
   const btn = document.getElementById("btn-trajetoria");
   const extras = lista.querySelectorAll(".exp-extra");
@@ -264,13 +250,11 @@ function iniciarBotaoTrajetoria(lista) {
       extras[0].querySelector("h3")?.setAttribute("tabindex", "-1");
       extras[0].querySelector("h3")?.focus({ preventScroll: true });
     } else {
-      // Ao recolher, mantém o botão à vista para a página não "pular".
       btn.scrollIntoView({ block: "nearest" });
     }
   });
 }
 
-/* ===== Cards ===== */
 function matiz(texto) {
   let h = 0;
   for (const c of String(texto)) h = (h * 31 + c.charCodeAt(0)) % 360;
@@ -295,7 +279,6 @@ function botoesLinks(links = {}) {
     .join("");
 }
 
-/* Lista de tecnologias. Com "max", mostra só as primeiras e um "+N" para o resto. */
 function tags(lista, max = Infinity) {
   if (!lista?.length) return "";
   const visiveis = lista.slice(0, max);
@@ -347,7 +330,6 @@ function cardApp(a) {
     </article>`;
 }
 
-/* ===== Projetos que participei (com filtro) ===== */
 function renderParticipacoes() {
   if (!LISTA_PART.length) {
     document.getElementById("projetos").hidden = true;
@@ -378,7 +360,6 @@ function renderParticipacoes() {
   desenhar("Todos");
 }
 
-/* ===== Meus apps ===== */
 function renderMeusApps() {
   if (!LISTA_APPS.length) {
     document.getElementById("apps").hidden = true;
@@ -389,7 +370,6 @@ function renderMeusApps() {
   document.getElementById("grade-apps").innerHTML = lista.map(cardApp).join("");
 }
 
-/* ===== Contato e rodapé ===== */
 function renderContato() {
   const itens = [];
   if (PERFIL.email) itens.push(["email", PERFIL.email, `mailto:${PERFIL.email}`]);
@@ -416,7 +396,6 @@ function renderListaPrivacidade() {
     .join("");
 }
 
-/* Anima os elementos com a classe .revelar quando entram na tela */
 function iniciarRevelar() {
   const els = document.querySelectorAll(".revelar:not(.visivel)");
   if (!("IntersectionObserver" in window)) {
