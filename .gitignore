@@ -1,0 +1,11 @@
+# Contexto local do Claude Code (não versionar)
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+
+# Sistema operacional / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.log

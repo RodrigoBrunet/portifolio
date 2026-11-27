@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#05070f" />
+    <title>Portfólio</title>
+    <meta
+      name="description"
+      content="Portfólio de projetos: aplicativos, sites e sistemas."
+    />
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <header class="topo">
+      <div class="container topo-conteudo">
+        <a class="marca" href="#inicio" data-nome>Portfólio</a>
+        <nav class="menu" aria-label="Principal">
+          <a class="menu-opcional" href="#sobre"><span data-num></span>sobre</a>
+          <a href="#trajetoria"><span data-num></span>trajetória</a>
+          <a href="#projetos"><span data-num></span>projetos</a>
+          <a href="#apps"><span data-num></span>apps</a>
+          <a href="#contato"><span data-num></span>contato</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="inicio" class="hero">
+        <div class="container hero-conteudo">
+          <div class="revelar">
+            <p class="status">disponível para novos projetos</p>
+            <div class="hero-identidade">
+              <div id="hero-avatar" class="avatar"></div>
+              <p class="prompt"><b>~/</b>portfolio <b>$</b> whoami</p>
+            </div>
+            <h1 id="hero-nome" class="texto-gradiente"></h1>
+            <p class="cargo">
+              <span id="hero-cargo"></span
+              ><span class="cursor" aria-hidden="true"></span>
+            </p>
+            <p id="hero-bio" class="hero-bio"></p>
+            <ul id="hero-stack" class="hero-stack" aria-label="Principais tecnologias"></ul>
+            <div class="hero-acoes">
+              <a class="botao" href="#trajetoria">Ver trajetória</a>
+              <a class="botao botao-sec" href="#contato">Entrar em contato</a>
+            </div>
+            <div id="hero-redes" class="redes"></div>
+          </div>
+
+          <div class="terminal revelar" aria-hidden="true">
+            <div class="terminal-barra">
+              <i></i><i></i><i></i><span>dev.config.js</span>
+            </div>
+            <pre id="terminal-codigo"></pre>
+          </div>
+        </div>
+
+        <div id="numeros" class="container numeros revelar"></div>
+      </section>
+
+      <section id="sobre" class="secao" data-numerada>
+        <div class="container sobre">
+          <div class="revelar">
+            <p class="rotulo"><span data-num></span>sobre</p>
+            <h2>Sobre mim</h2>
+            <div id="sobre-texto" class="sobre-texto"></div>
+          </div>
+          <div class="revelar">
+            <h3>stack</h3>
+            <ul id="habilidades" class="tags tags-grandes"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="trajetoria" class="secao" data-numerada>
+        <div class="container">
+          <div class="secao-cabecalho revelar">
+            <div>
+              <p class="rotulo"><span data-num></span>carreira</p>
+              <h2>Trajetória</h2>
+            </div>
+          </div>
+          <ol id="lista-trajetoria" class="trajetoria"></ol>
+          <button id="btn-trajetoria" class="botao botao-sec btn-trajetoria" type="button"
+            aria-expanded="false" aria-controls="lista-trajetoria" hidden></button>
+        </div>
+      </section>
+
+      <section id="projetos" class="secao" data-numerada>
+        <div class="container">
+          <div class="secao-cabecalho revelar">
+            <div>
+              <p class="rotulo"><span data-num></span>em equipe</p>
+              <h2>Projetos que participei</h2>
+            </div>
+            <div
+              id="filtros"
+              class="filtros"
+              role="group"
+              aria-label="Filtrar por categoria"
+            ></div>
+          </div>
+          <div id="grade-projetos" class="grade"></div>
+        </div>
+      </section>
+
+      <section id="apps" class="secao" data-numerada>
+        <div class="container">
+          <div class="secao-cabecalho revelar">
+            <div>
+              <p class="rotulo"><span data-num></span>autorais</p>
+              <h2>Meus apps</h2>
+            </div>
+          </div>
+          <div id="grade-apps" class="grade"></div>
+        </div>
+      </section>
+
+      <section id="contato" class="secao" data-numerada>
+        <div class="container">
+          <div class="contato revelar">
+            <p class="rotulo"><span data-num></span>contato</p>
+            <h2>
+              Vamos construir algo <span class="texto-gradiente">juntos?</span>
+            </h2>
+            <p>
+              Tem um projeto em mente ou quer saber mais sobre algum trabalho?
+              Fale comigo.
+            </p>
+            <div id="contato-links" class="contato-links"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rodape">
+      <div class="container rodape-conteudo">
+        <p id="rodape-texto"></p>
+        <div id="bloco-privacidade" class="rodape-privacidade">
+          <span>privacidade:</span>
+          <ul id="lista-privacidade"></ul>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/dados.js"></script>
+    <script src="assets/js/comum.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
